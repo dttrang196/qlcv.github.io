@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Công Việc</title>
+    <style>
+        body { 
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+            max-width: 400px; 
+            margin: auto; 
+            background-color:beige; 
+            text-align: center;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 50px;
+            margin-top: 50px;
+        }
+        .task-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 70%;
+            padding: 8px;
+            border: 2px solid #4CAF50;
+            border-radius: 5px;
+            height: 36px;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+        }
+        button {
+            padding: 27px 16px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul { 
+            list-style-type: none; 
+            padding: 0; 
+        }
+        li { 
+            background: #ffffff; 
+            margin: 25px 0; 
+            padding: 10px; 
+            display: flex; 
+            align-items: center;
+            justify-content: space-between; 
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            min-height: 36px;
+        }
+        li span {
+            flex-grow: 1;
+            cursor: pointer;
+            text-align: left;
+        }
+        li button {
+            background-color: #ff4d4d;
+            border-radius: 5px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        li button:hover {
+            background-color: #ff1a1a;
+        }
+    </style>
+</head>
+<body>
+    <h2>QUẢN LÝ CÔNG VIỆC</h2>
+    <div class="task-container">
+        <input type="text" id="taskInput" placeholder="Nhập công việc">
+        <button onclick="addTask()">Thêm</button>
+    </div>
+    <ul id="taskList"></ul>
+
+    <script>
+        let tasks = [];
+
+        function renderTasks() {
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = "";
+            tasks.forEach((task, index) => {
+                taskList.innerHTML += `
+                    <li>
+                        <span contenteditable="true" onBlur="editTask(${index}, this)">${task}</span>
+                        <button onclick="deleteTask(${index})">Xóa</button>
+                    </li>`;
+            });
+        }
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            if (taskInput.value.trim() !== "") {
+                tasks.push(taskInput.value.trim());
+                taskInput.value = "";
+                renderTasks();
+            }
+        }
+        function editTask(index, element) {
+            tasks[index] = element.innerText;
+        }
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            renderTasks();
+        }
+        function displayTasks() {
+            console.log("Danh sách công việc:");
+            tasks.forEach((task, index) => {
+                console.log(`${index + 1}. ${task}`);
+            });
+        }
+    </script>
+</body>
+</html>
+
